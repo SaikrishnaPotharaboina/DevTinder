@@ -2,22 +2,31 @@ const express = require("express");
 
 const app = express();
 
-app.use("/test", (req, res) => {
-    res.send("server we using /test/j ")
-});
+// app.use("/test", (req, res) => {
+//     res.send("server we using /test/j ")
+// });
 
 
-app.get("/user", (req, res) => {
+// app.get("/user", (req, res) => {
+//     res.send({ first_name: "saikrishna", last_name: "Potharaboina" })
+// });
+
+// app.post("/user", (req, res) => {
+//     res.send("save the data successful")
+// });
+
+// app.delete("/user", (req, res) => {
+//     res.send("delete the data successful")
+// })
+
+
+
+
+//its work for /abc ,/ab?c
+app.get("/ab?c", (req, res) => {
     res.send({ first_name: "saikrishna", last_name: "Potharaboina" })
 });
 
-app.post("/user", (req, res) => {
-    res.send("save the data successful")
-});
-
-app.delete("/user", (req, res) => {
-    res.send("delete the data successful")
-})
 
 app.listen(3000, () => {
     console.log("server is successful listing")
