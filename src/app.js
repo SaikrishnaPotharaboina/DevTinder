@@ -23,8 +23,15 @@ const app = express();
 
 
 //its work for /abc ,/ab?c
-app.get("/user", (req, res) => {
-    console.log(req.query);
+// app.get("/user", (req, res) => {
+//     console.log(req.query);
+//     res.send({ first_name: "saikrishna", last_name: "Potharaboina" })
+// });
+
+
+//eaxple's of routing how to handle with some other riuting methos 
+app.get("/user/:userId/:name/:passwrod", (req, res) => {
+    console.log(req.params); //dynamc routinjg 
     res.send({ first_name: "saikrishna", last_name: "Potharaboina" })
 });
 
