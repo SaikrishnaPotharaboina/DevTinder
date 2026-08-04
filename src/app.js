@@ -23,7 +23,8 @@ const app = express();
 
 
 //its work for /abc ,/ab?c
-app.get("/ab?c", (req, res) => {
+app.get("/user", (req, res) => {
+    console.log(req.query);
     res.send({ first_name: "saikrishna", last_name: "Potharaboina" })
 });
 
