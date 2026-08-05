@@ -1,6 +1,9 @@
+
 const express = require("express");
 
 const app = express();
+
+const { adminAuth } = require("./Middlewares/auth")
 
 // app.use("/test", (req, res) => {
 //     res.send("server we using /test/j ")
@@ -37,62 +40,72 @@ const app = express();
 // });
 
 
-app.use("/user", (req, res, next) => {
-    //responds 1 
-    console.log("handling the router user");
+// app.use("/user", (req, res, next) => {
+//     //responds 1 
+//     console.log("handling the router user");
 
-    console.log(req.query);
-    res.send("Responds 1");
+//     console.log(req.query);
+//     res.send("Responds 1");
 
-    /** */
-    //if i want to go 2nd responds i will use next(); for 2nd router exute thats it........haha
-    next();
-
-
+//     /** */
+//     //if i want to go 2nd responds i will use next(); for 2nd router exute thats it........haha
+//     next();
 
 
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 3")
-    next();
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 4 ")
-    next();
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 5")
-    next();
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 6")
-    next();
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 7")
-    next();
-}, (req, res, next) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 8")
-    next();
-}, (req, res) => {
-    //responds 2 
-    console.log("handling the router user");
-    console.log(req.query);
-    res.send("Responds 9")
+
+
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 3")
+//     next();
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 4 ")
+//     next();
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 5")
+//     next();
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 6")
+//     next();
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 7")
+//     next();
+// }, (req, res, next) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 8")
+//     next();
+// }, (req, res) => {
+//     //responds 2 
+//     console.log("handling the router user");
+//     console.log(req.query);
+//     res.send("Responds 9")
+// });
+
+
+app.use("/admin/getAllData", adminAuth);
+
+app.use("/admin/deleteUser", (req, res) => {
+    res.send("deleted user");
 });
+
+
+
 
 app.listen(3000, () => {
     console.log("server is successful listing")
