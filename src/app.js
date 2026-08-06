@@ -3,16 +3,13 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 
+app.use(express.json())
+
 app.post("/singUp", async (req, res) => {
-    // creating new instance user model   // dumi data sending to db to cheking
-    const user = new User({
-        firstName: "priya",
-        lastName: "Mattepally",
-        EmailId: "jahnavi@gmail.com",
-        password: "krihshna",
-        age: "24",
-        place: "hanumkonda"
-    });
+    // console.log(req.body)
+
+    // creating new user model 
+    const user = new User(req.body);
 
     //always use try catch when we creating db data
     try {
