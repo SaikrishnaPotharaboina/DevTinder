@@ -4,15 +4,17 @@ const app = express();
 const User = require("./models/user");
 
 app.post("/singUp", async (req, res) => {
-    // creating new instance user model
+    // creating new instance user model   // dumi data sending to db to cheking
     const user = new User({
-        firstName: "Jahnavi Priya",
+        firstName: "priya",
         lastName: "Mattepally",
         EmailId: "jahnavi@gmail.com",
-        password: "jahnavi",
+        password: "krihshna",
         age: "24",
         place: "hanumkonda"
     });
+
+    //always use try catch when we creating db data
     try {
         await user.save();
         res.send("user added succesfull");
