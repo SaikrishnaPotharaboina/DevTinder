@@ -72,7 +72,9 @@ app.delete("/user", async (req, res) => {
     const userId = req.body.userId;
     try {
         console.log(userId)
-        const user = await User.findByIdAndDelete(userId);
+        //const user = await User.findByIdAndDelete(userId);
+
+        const user = await User.findOneAndDelete({ _id: userId })
 
         if (!user) {
             res.status(404).send("User Already Deleted Succesfull");
