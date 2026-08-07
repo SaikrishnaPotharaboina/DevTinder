@@ -103,11 +103,10 @@ app.put("/user", async (req, res) => {
 
 app.patch("/user", async (req, res) => {
     const userId = req.body.userId;
-    const firstName = req.body.firstName
+    const data = req.body;
     try {
-        const user = await User.findByIdAndUpdate(userId, { firstName }, { returnDocument: "after" })
+        const user = await User.findByIdAndUpdate({ _id: userId }, data)
         // console.log(req.body.userId);
-        console.log(user);
         res.send(user)
     } catch (error) {
         res.status(400).send("Somthing Went Worng");
