@@ -177,3 +177,10 @@ JSON.parse()
         ▼
 JavaScript Object
 ```
+
+| Feature          | PUT                                    | PATCH                              |
+| ---------------- | -------------------------------------- | ---------------------------------- |
+| Purpose          | Replace the entire resource            | Update only specific fields        |
+| Request body     | Usually contains the complete resource | Contains only the fields to change |
+| Unchanged fields | Typically included in the request      | Left unchanged automatically       |
+| Common use       | Full update                            | Partial update                     |
