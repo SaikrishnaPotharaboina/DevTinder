@@ -21,6 +21,37 @@ app.post("/singUp", async (req, res) => {
     };
 });
 
+//userAPI - GET /user firstName of the  user data from database.
+//you can see the data using what you want main we use "find() method"
+app.get("/user", async (req, res) => {
+    const userName = req.body.firstName;
+    try {
+
+        const user = await User.findOne({ firstName: userName });
+        res.send(user);
+        // const users = await User.find({ firstName: userName });
+        // if (users.length === 0) {
+        //     res.status(404).send("User is not found");
+        // } else {
+        //     res.send(users);
+        // }
+    } catch (error) {
+        res.status(400).send("user name not there");
+    }
+});
+
+
+//Feed API - GET /Feed  get the all user data from database.
+app.get("/feed", async (req, res) => {
+    try {
+        const user = await User.find({});
+        res.send(user);
+    } catch (error) {
+        res.status(400).send("Users are not Found");
+    }
+});
+
+
 connectDB().then(() => {
     console.log("connected succesfull with DB")
     app.listen(3000, () => {
