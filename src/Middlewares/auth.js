@@ -1,6 +1,6 @@
 const adminAuth = (req, res) => {
-    const token = "janu"
-    const isAutherrizedUser = token === "janu";
+    const token = "sai"
+    const isAutherrizedUser = token === "sai";
     if (isAutherrizedUser) {
         res.send(" all data send")
     } else {
