@@ -55,7 +55,7 @@ app.get("/id", async (req, res) => {
     const userName = req.body.firstName;
     try {
 
-        const user = await User.findById({ _id : userName});
+        const user = await User.findById({ _id: userName });
         // res.send(user);
         // const users = await User.find({ firstName: userName });
         if (user.length === 0) {
@@ -67,6 +67,23 @@ app.get("/id", async (req, res) => {
         res.status(400).send("user name not there");
     }
 });
+
+app.delete("/user", async (req, res) => {
+    const userId = req.body.userId;
+    try {
+        console.log(userId)
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) {
+            res.status(404).send("User Already Deleted Succesfull");
+        } else {
+            res.send("User Delete Succesfull");
+        }
+    } catch (error) {
+        res.status(400).send("Somthing Went Worng");
+    }
+});
+
 
 
 connectDB().then(() => {
