@@ -30,24 +30,41 @@ app.get("/user", async (req, res) => {
         const user = await User.findOne({ firstName: userName });
         res.send(user);
         // const users = await User.find({ firstName: userName });
-        // if (users.length === 0) {
+        // if (user.length === 0) {
         //     res.status(404).send("User is not found");
         // } else {
-        //     res.send(users);
+        //     res.send(user._id);
         // }
     } catch (error) {
         res.status(400).send("user name not there");
     }
 });
 
-
-//Feed API - GET /Feed  get the all user data from database.
+//Feed API - GET /"Feed"  get the all user data from database.
 app.get("/feed", async (req, res) => {
     try {
         const user = await User.find({});
         res.send(user);
     } catch (error) {
         res.status(400).send("Users are not Found");
+    }
+});
+
+// ID API - GET "ID" by userName or firstName
+app.get("/id", async (req, res) => {
+    const userName = req.body.firstName;
+    try {
+
+        const user = await User.findById({ _id : userName});
+        // res.send(user);
+        // const users = await User.find({ firstName: userName });
+        if (user.length === 0) {
+            res.status(404).send("User is not found");
+        } else {
+            res.send(user._id);
+        }
+    } catch (error) {
+        res.status(400).send("user name not there");
     }
 });
 
