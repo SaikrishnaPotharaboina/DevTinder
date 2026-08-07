@@ -87,6 +87,21 @@ app.delete("/user", async (req, res) => {
 });
 
 
+app.put("/user", async (req, res) => {
+    const userId = req.body.userId;
+    const firstName = req.body.firstName
+    try {
+        const user = await User.findByIdAndUpdate(userId, { firstName }, { returnDocument: "after" })
+        // console.log(req.body.userId);
+        console.log(user);
+        res.send(user)
+    } catch (error) {
+        res.status(400).send("Somthing Went Worng");
+    }
+})
+
+
+
 
 connectDB().then(() => {
     console.log("connected succesfull with DB")
