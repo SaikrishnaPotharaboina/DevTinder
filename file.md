@@ -184,3 +184,8 @@ JavaScript Object
 | Request body     | Usually contains the complete resource | Contains only the fields to change |
 | Unchanged fields | Typically included in the request      | Left unchanged automatically       |
 | Common use       | Full update                            | Partial update                     |
+
+
+
+
+--Exploer shcemaTypes - Today - 08-08-2026
