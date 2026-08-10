@@ -101,24 +101,22 @@ app.put("/user", async (req, res) => {
 });
 
 
-app.patch("/user", async (req, res) => {
-    const userId = req.body.userId;
+app.patch("/user/:userId", async (req, res) => {
+    const userId = req.params?.userId;
     const data = req.body;
-
-
     try {
-        const ALLOWED_UPDATES = ["age", "skills"]
+        const ALLOWED_UPDATES = ["age", "skills", "gender"]
 
-        const isUpdatedAllowed = Object.key(data).every((k) => ALLOWED_UPDATES.includes(k));
+        const isUpdatedAllowed = Object.keys(data).every((k) => ALLOWED_UPDATES.includes(k));
         if (!isUpdatedAllowed) {
             throw new Error("update is not allow")
-        }
-        const user = await User.findByIdAndUpdate({ _id: userId }, data)
+        };
+        const user = await User.findByIdAndUpdate({ _id: userId }, data, { runValidators: true, returnDocument: "after" })
         // console.log(req.body.userId);
         res.send(user)
     } catch (error) {
-        res.status(400).send("Somthing Went Worng");
-    }
+        res.status(400).send("Somthing Went Worng : " + error);
+    };
 });
 
 
