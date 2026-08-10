@@ -115,7 +115,7 @@ app.patch("/user/:userId", async (req, res) => {
         // console.log(req.body.userId);
         res.send(user)
     } catch (error) {
-        res.status(400).send("Somthing Went Worng : " + error);
+        res.status(400).send("Somthing Went Worng : " + error.message);
     };
 });
 
