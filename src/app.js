@@ -3,9 +3,12 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 const validateSignUpData = require("./utils/validations");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+
 
 app.use(express.json())
+app.use(cookieParser());
 
 app.post("/singUp", async (req, res) => {
     try {
@@ -49,10 +52,15 @@ app.post("/login", async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordValid) {
-            throw new Error("Invalid Credentials")
-        } else {
+        if (isPasswordValid) {
+
+            // JWT token
+            // coockie
+
+            res.cookie("token", "kadjahfuihsduifhdsiufhdisuhfiusdhfiusdhfiushdfuig");
             res.send("Login Succesfull!!")
+        } else {
+            throw new Error("Invalid Credentials")
         }
     } catch (error) {
         res.status(400).send("ERROR :" + error.message);
@@ -62,7 +70,15 @@ app.post("/login", async (req, res) => {
 
 
 
-
+app.get("/profile", async (req, res) => {
+    try {
+        const cookies = req.cookies;
+        console.log(cookies);
+        res.send(cookies);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 
 
