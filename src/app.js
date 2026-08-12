@@ -34,6 +34,38 @@ app.post("/singUp", async (req, res) => {
     };
 });
 
+
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        // checking myy email ID present or not in DB
+
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            throw new Error("Invalid Credentials");
+        }
+
+        //checking my password usint bcrypt compare
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            throw new Error("Invalid Credentials")
+        } else {
+            res.send("Login Succesfull!!")
+        }
+    } catch (error) {
+        res.status(400).send("ERROR :" + error.message);
+    };
+});
+
+
+
+
+
+
+
+
 //userAPI - GET /user firstName of the  user data from database.
 //you can see the data using what you want main we use "find() method"
 app.get("/user", async (req, res) => {
