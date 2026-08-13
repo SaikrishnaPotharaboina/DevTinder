@@ -5,6 +5,7 @@ const User = require("./models/user");
 const validateSignUpData = require("./utils/validations");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const JWT = require("jsonwebtoken");
 
 
 app.use(express.json())
@@ -54,10 +55,14 @@ app.post("/login", async (req, res) => {
 
         if (isPasswordValid) {
 
-            // JWT token
+            // create a JWT token
+
+            const token = await JWT.sign({ _id: user._id }, "SAI@!143");
+
+            //console.log(token)
             // coockie
 
-            res.cookie("token", "kadjahfuihsduifhdsiufhdisuhfiusdhfiusdhfiushdfuig");
+            res.cookie("token", token);
             res.send("Login Succesfull!!")
         } else {
             throw new Error("Invalid Credentials")
@@ -73,8 +78,29 @@ app.post("/login", async (req, res) => {
 app.get("/profile", async (req, res) => {
     try {
         const cookies = req.cookies;
-        console.log(cookies);
-        res.send(cookies);
+
+
+        const { token } = cookies;
+
+        if (!token) {
+            throw new Error("Invalid Token")
+        }
+        // Validation my token
+        const decodedValue = await JWT.verify(token, "SAI@!143");
+
+        // console.log(decodedValue);
+
+        const { _id } = decodedValue;
+
+        // console.log("logged in user : " + _id);
+
+        const user = await User.findById(_id);
+
+        if (!user) {
+            throw new Error("Invalid user");
+        }
+        res.send(user);
+
     } catch (error) {
         res.status(500).send(error.message);
     }
