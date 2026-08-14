@@ -6,6 +6,7 @@ const validateSignUpData = require("./utils/validations");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const JWT = require("jsonwebtoken");
+const { userAuth } = require("./Middlewares/auth")
 
 
 app.use(express.json())
@@ -43,24 +44,22 @@ app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
         // checking myy email ID present or not in DB
-
         const user = await User.findOne({ email: email });
         if (!user) {
             throw new Error("Invalid Credentials");
-        }
+        };
+        //checking my password using bcrypt compare
 
-        //checking my password usint bcrypt compare
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password); //module doc check if any doubt in bcrypt
 
         if (isPasswordValid) {
 
-            // create a JWT token
+            // create a JWT token from jsonwebtoken doc
 
-            const token = await JWT.sign({ _id: user._id }, "SAI@!143");
+            const token = await JWT.sign({ _id: user._id }, "SAI@!143", { expiresIn: "1d" });
 
-            //console.log(token)
-            // coockie
+
+            // attaching with cookies. 
 
             res.cookie("token", token);
             res.send("Login Succesfull!!")
@@ -73,34 +72,14 @@ app.post("/login", async (req, res) => {
 });
 
 
-
-
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
     try {
-        const cookies = req.cookies;
-
-
-        const { token } = cookies;
-
-        if (!token) {
-            throw new Error("Invalid Token")
-        }
-        // Validation my token
-        const decodedValue = await JWT.verify(token, "SAI@!143");
-
-        // console.log(decodedValue);
-
-        const { _id } = decodedValue;
-
-        // console.log("logged in user : " + _id);
-
-        const user = await User.findById(_id);
-
+        const user = req.user;
         if (!user) {
             throw new Error("Invalid user");
+        } else {
+            res.send(user);
         }
-        res.send(user);
-
     } catch (error) {
         res.status(500).send(error.message);
     }
