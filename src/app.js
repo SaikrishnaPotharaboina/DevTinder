@@ -43,24 +43,13 @@ app.post("/singUp", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        // checking myy email ID present or not in DB
         const user = await User.findOne({ email: email });
         if (!user) {
             throw new Error("Invalid Credentials");
         };
-        //checking my password using bcrypt compare
-
-        const isPasswordValid = await bcrypt.compare(password, user.password); //module doc check if any doubt in bcrypt
-
+        const isPasswordValid = await user.validatePassword(password);
         if (isPasswordValid) {
-
-            // create a JWT token from jsonwebtoken doc
-
-            const token = await JWT.sign({ _id: user._id }, "SAI@!143", { expiresIn: "1d" });
-
-
-            // attaching with cookies. 
-
+            const token = await user.getJWT();
             res.cookie("token", token);
             res.send("Login Succesfull!!")
         } else {
@@ -70,7 +59,6 @@ app.post("/login", async (req, res) => {
         res.status(400).send("ERROR :" + error.message);
     };
 });
-
 
 app.get("/profile", userAuth, async (req, res) => {
     try {

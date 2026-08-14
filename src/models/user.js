@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const validator = require("validator")
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
     // id:{
@@ -55,6 +56,18 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
+userSchema.methods.getJWT = async function () {
+    const user = this;
+    const token = await JWT.sign({ _id: user._id }, "SAI@!143", { expiresIn: "1d" });
+    return token;
+};
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+    const user = this;
+    const passwordHash = user.password;
+
+    const isPasswordValid = await bcrypt.compare(passwordInputByUser, passwordHash);
+    return isPasswordValid;
+}
 const UserModel = mongoose.model("user", userSchema);
 //1st place name of the model, 2nd what we created schema. 
 //when we use The model always first letter is Captal.
