@@ -50,7 +50,7 @@ app.post("/login", async (req, res) => {
         const isPasswordValid = await user.validatePassword(password);
         if (isPasswordValid) {
             const token = await user.getJWT();
-            res.cookie("token", token);
+            res.cookie("token", token, { expires: new Date(Date.now() + 900_000), });
             res.send("Login Succesfull!!")
         } else {
             throw new Error("Invalid Credentials")
@@ -73,6 +73,13 @@ app.get("/profile", userAuth, async (req, res) => {
     }
 });
 
+
+app.post("/sendconnection", userAuth, async (req, res) => {
+
+    const user = req.user;
+    res.send(user.firstName + " : connction sent succesfull")
+
+});
 
 
 //userAPI - GET /user firstName of the  user data from database.
