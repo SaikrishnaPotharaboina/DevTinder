@@ -17,10 +17,6 @@ app.use("/", requestRouter);
 
 
 
-
-
-
-
 connectDB().then(() => {
     console.log("connected succesfull with DB")
     app.listen(3000, () => {
