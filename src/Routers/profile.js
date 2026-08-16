@@ -35,8 +35,8 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
 
         const loggedinUser = req.user;
 
-        console.log(loggedinUser);
-        console.log(req.body);
+        // console.log(loggedinUser);
+        // console.log(req.body);
 
         res.status(200).json({
             message: "Profile edit request is valid",
@@ -44,7 +44,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        // console.error(error);
 
         res.status(500).json({
             message: error.message
