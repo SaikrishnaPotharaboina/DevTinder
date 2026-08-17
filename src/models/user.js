@@ -69,7 +69,7 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
     const isPasswordValid = await bcrypt.compare(passwordInputByUser, passwordHash);
     return isPasswordValid;
 }
-const UserModel = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 //1st place name of the model, 2nd what we created schema. 
 //when we use The model always first letter is Captal.
-module.exports = UserModel;
+module.exports = User;
