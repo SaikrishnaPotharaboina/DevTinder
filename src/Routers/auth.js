@@ -1,7 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const User = require("../models/user");
-const validateSignUpData = require("../utils/validations");
+const { validateSignUpData } = require("../utils/validations");
 const bcrypt = require("bcrypt");
 //const JWT = require("jsonwebtoken");
 
@@ -22,7 +22,7 @@ authRouter.post("/singUp", async (req, res) => {
 
         // creating new user model 
         const user = new User({
-            firstName, lastName, email, password: passwordHash,
+            firstName, lastName, email, password: passwordHash
         });
 
         //always use try catch when we creating db data
