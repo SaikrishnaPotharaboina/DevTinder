@@ -4,26 +4,30 @@ const validator = require("validator")
 
 const connectonRequestSchema = new mongoose.Schema({
 
-    toUser: {
+    toUserId: {
         // its take user id
         type: mongoose.Schema.Types.ObjectId,
         require: true,
+
+
     },
-    fromUser: {
+    fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         require: true,
     },
     status: {
         type: String,
         enum: {
-            values: ["ignored", "intrested", "accepted", "rejected"],
+            values: ["ignored", "interested", "accepted", "rejected"],
             message: `{VALUE} incorrect status type`
-        },
+        }
     },
 }, {
     timestamps: true,
 });
 
-const ConnectonRequest = new mongoose.model("connectonRequest", connectonRequestSchema);
+const ConnectonRequest = new mongoose.model("ConnectonRequest", connectonRequestSchema);
+
+
 
 module.exports = ConnectonRequest;
