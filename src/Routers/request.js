@@ -39,6 +39,15 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
 
 
 
+        const user = await User.findById(toUserId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+
         const exitingConnectionRequest = await ConnectonRequest.findOne({
             $or: [
 
@@ -53,13 +62,6 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
             })
         };
 
-        const user = await User.findById(toUserId);
-
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found"
-            });
-        }
 
 
 
@@ -71,7 +73,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
 
         const data = await connectonRequest.save();
         return res.status(200).json({
-            message: "connecton sent successfull",
+            message: req.user.firstName + "is " + status + "in" + toUserId.firstName,
             data
         });
 
