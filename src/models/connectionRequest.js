@@ -34,6 +34,7 @@ connectonRequestSchema.pre("save", function (next) {
     if (ConnectonRequest.fromUserId.equalto(ConnectonRequest.toUserId)) {
         throw new Error("You cannot send a connection request to yourself")
     }
+    next();
 });
 
 const ConnectonRequest = new mongoose.model("ConnectonRequest", connectonRequestSchema);
