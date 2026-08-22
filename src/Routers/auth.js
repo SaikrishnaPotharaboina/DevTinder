@@ -19,7 +19,13 @@ authRouter.post("/singUp", async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10);
         console.log(passwordHash);
         // console.log(req.body)
+        const existingUser = await User.findOne({ email });
 
+        if (existingUser) {
+            return res.status(400).json({
+                message: "Email already registered"
+            });
+        }
         // creating new user model 
         const user = new User({
             firstName, lastName, email, password: passwordHash
