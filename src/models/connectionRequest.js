@@ -2,18 +2,20 @@ const mongoose = require("mongoose");
 const validator = require("validator")
 
 
-const connectonRequestSchema = new mongoose.Schema({
+const connectionRequestSchema = new mongoose.Schema({
 
     toUserId: {
         // its take user id
         type: mongoose.Schema.Types.ObjectId,
         require: true,
+        ref: "User"
 
 
     },
     fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         require: true,
+        ref: "User"
     },
     status: {
         type: String,
@@ -26,19 +28,19 @@ const connectonRequestSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-connectonRequestSchema.index({ fromUserId: 1, toUserId: 1 });
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
 
-connectonRequestSchema.pre("save", function (next) {
-    const ConnectonRequest = this;
+connectionRequestSchema.pre("save", function () {
 
-    if (ConnectonRequest.fromUserId.equalto(ConnectonRequest.toUserId)) {
+    const connectionRequest = this;
+
+    if (connectionRequest.fromUserId.equals(connectionRequest.toUserId)) {
         throw new Error("You cannot send a connection request to yourself")
     }
-    next();
 });
 
-const ConnectonRequest = new mongoose.model("ConnectonRequest", connectonRequestSchema);
+const ConnectionRequest = new mongoose.model("ConnectionRequest", connectionRequestSchema);
 
 
 
-module.exports = ConnectonRequest;
+module.exports = ConnectionRequest;
