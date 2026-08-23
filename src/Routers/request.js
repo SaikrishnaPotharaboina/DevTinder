@@ -108,7 +108,7 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async (req, r
             _id: requestId,
             toUserId: loggedinUser._id,
             status: "interested"
-        }).populate("fromUserId", "firstName");
+        }).populate("fromUserId", ["firstName"]);
         if (!connectionRequest) {
             return res.status(404).json({
                 message: "Connection not found"

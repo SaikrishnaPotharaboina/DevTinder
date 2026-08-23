@@ -46,6 +46,10 @@ const userSchema = new mongoose.Schema({
     skills: {
         type: [String],
     },
+    photoUrl: {
+        type: String,
+        default: "https://example.com/default-profile.png",
+    },
     gender: {
         type: String,
         validate(value) {
